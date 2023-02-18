@@ -1,24 +1,34 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
-import { IngredientModel } from "./ingredient.model/ingredient.model";
+import { Ingredient } from "./ingredient.schema/ingredient.schema";
 import { CreateIngredientDto } from "./dto/create-ingredient.dto";
+import { IngredientService } from "./ingredient.service";
 
 @Controller("ingredient")
 export class IngredientController {
-  @Post("create")
-  async create(@Body() dto: CreateIngredientDto) {}
+  constructor(private readonly ingredientService: IngredientService) {}
 
-  @Get()
-  async findAll() {}
+  @Post("create")
+  async create(@Body() dto: CreateIngredientDto) {
+    return this.ingredientService.create(dto);
+  }
 
   @Get(":id")
-  async findById(@Param("id") id: number) {}
+  async findById(@Param("id") id: string) {
+    return this.ingredientService.findById(id);
+  }
+
+  @Get()
+  async findAll() {
+    return this.ingredientService.findAll();
+  }
 
   @Patch(":id")
-  async updateById(@Param("id") id: number, @Body() dto: IngredientModel) {}
+  async updateById(@Param("id") id: string, @Body() dto: Ingredient) {
+    return this.ingredientService.updateById(id, dto);
+  }
 
   @Delete(":id")
-  async delete(@Param("id") id: number) {}
-
-  @Post("findByIds")
-  async findByIds(@Body() ids: number[]) {}
+  async delete(@Param("id") id: string) {
+    return this.ingredientService.delete(id);
+  }
 }

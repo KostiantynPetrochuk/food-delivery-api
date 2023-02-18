@@ -9,11 +9,19 @@ import { FoodModule } from "./food/food.module";
 import { OrderModule } from "./order/order.module";
 import { CustomModule } from "./custom/custom.module";
 import { EventModule } from "./event/event.module";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>("MONGODB_URI"),
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
     DishCategoryModule,
     IngredientModule,

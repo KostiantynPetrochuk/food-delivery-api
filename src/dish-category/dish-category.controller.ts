@@ -1,21 +1,34 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
-import { DishCategoryModel } from "./dish-category.model/dish-category.model";
+import { DishCategory } from "./dish-category.schema/dish-category.schema";
+import { DishCategoryService } from "./dish-category.service";
 import { CreateDishCategoryDto } from "./dto/create-dish-category.dto";
 
 @Controller("dish-category")
 export class DishCategoryController {
+  constructor(private readonly dishCategoryService: DishCategoryService) {}
+
   @Post("create")
-  async create(@Body() dto: CreateDishCategoryDto) {}
+  async create(@Body() dto: CreateDishCategoryDto) {
+    return this.dishCategoryService.create(dto);
+  }
 
   @Get(":id")
-  async findById(@Param("id") id: number) {}
+  async findById(@Param("id") id: string) {
+    return this.dishCategoryService.findById(id);
+  }
 
   @Get()
-  async findAll() {}
+  async findAll() {
+    return this.dishCategoryService.findAll();
+  }
 
   @Patch(":id")
-  async updateById(@Param("id") id: number, @Body() dto: DishCategoryModel) {}
+  async updateById(@Param("id") id: string, @Body() dto: DishCategory) {
+    return this.dishCategoryService.updateById(id, dto);
+  }
 
   @Delete(":id")
-  async delete(@Param("id") id: number) {}
+  async delete(@Param("id") id: string) {
+    return this.dishCategoryService.delete(id);
+  }
 }

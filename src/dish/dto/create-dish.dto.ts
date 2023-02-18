@@ -1,5 +1,5 @@
 export class CreateDishDto {
-  dishCategoryId: string;
+  dishCategory: string;
   name: string;
   imagePath: string;
   weight: number;

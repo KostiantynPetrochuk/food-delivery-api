@@ -1,21 +1,34 @@
 import { Controller, Post, Get, Patch, Delete, Body, Param } from "@nestjs/common";
-import { DishModel } from "./dish.model/dish.model";
+import { Dish } from "./dish.schema/dish.schema";
+import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
 
 @Controller("dish")
 export class DishController {
-  @Post("create")
-  async create(@Body() dto: CreateDishDto) {}
+  constructor(private readonly dishService: DishService) {}
 
-  @Get()
-  async findAll() {}
+  @Post("create")
+  async create(@Body() dto: CreateDishDto) {
+    return this.dishService.create(dto);
+  }
 
   @Get(":id")
-  async findById(@Param("id") id: number) {}
+  async findById(@Param("id") id: string) {
+    return this.dishService.findById(id);
+  }
+
+  @Get()
+  async findAll() {
+    return this.dishService.findAll();
+  }
 
   @Patch(":id")
-  async updateById(@Param("id") id: number, @Body() dto: DishModel) {}
+  async updateById(@Param("id") id: string, @Body() dto: Dish) {
+    return this.dishService.updateById(id, dto);
+  }
 
   @Delete(":id")
-  async delete(@Param("id") id: number) {}
+  async delete(@Param("id") id: string) {
+    return this.dishService.delete(id);
+  }
 }
