@@ -12,7 +12,9 @@ import { EventModule } from "./event/event.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { getMongoConfig } from "./configs/mongo.config";
-import { FilesModule } from './files/files.module';
+import { FilesModule } from "./files/files.module";
+import { TelegramModule } from "./telegram/telegram.module";
+import { getTelegramConfig } from "./configs/telegram.config";
 
 @Module({
   imports: [
@@ -31,6 +33,11 @@ import { FilesModule } from './files/files.module';
     CustomModule,
     EventModule,
     FilesModule,
+    TelegramModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getTelegramConfig,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

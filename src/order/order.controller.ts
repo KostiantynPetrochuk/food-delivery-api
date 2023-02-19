@@ -9,19 +9,38 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { Order } from "./order.schema/order.schema";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { OrderService } from "./order.service";
 import { IdValidationPipe } from "../pipes/id-validation.pipe";
+import { TelegramService } from "src/telegram/telegram.service";
 
 @Controller("order")
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly telegramService: TelegramService,
+  ) {}
 
   @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateOrderDto) {
     return this.orderService.create(dto);
+  }
+
+  @UsePipes(new ValidationPipe())
+  @Post("notify")
+  async notify(@Body() dto: CreateOrderDto) {
+    const message =
+      `Ім'я: ${dto.firstName}\n` +
+      `Прізвище: ${dto.lastName}\n` +
+      `По батькові: ${dto.surrName}\n` +
+      `Телефон: ${dto.phone}\n` +
+      `Доставка: ${dto.delivery}\n` +
+      `Адреса: ${dto.address}\n` +
+      `Статус: ${dto.status}\n` +
+      `Оплата: ${dto.paymentMethod}\n` +
+      `Час доставки: ${dto.deliveryTime}\n`;
+    return this.telegramService.sendMessage(message);
   }
 
   @Get(":id")
