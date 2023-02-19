@@ -11,15 +11,14 @@ import { CustomModule } from "./custom/custom.module";
 import { EventModule } from "./event/event.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
+import { getMongoConfig } from "./configs/mongo.config";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>("MONGODB_URI"),
-      }),
+      useFactory: getMongoConfig,
       inject: [ConfigService],
     }),
     AuthModule,
