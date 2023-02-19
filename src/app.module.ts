@@ -12,6 +12,7 @@ import { EventModule } from "./event/event.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { getMongoConfig } from "./configs/mongo.config";
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { getMongoConfig } from "./configs/mongo.config";
     OrderModule,
     CustomModule,
     EventModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
