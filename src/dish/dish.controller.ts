@@ -14,6 +14,7 @@ import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
 import { Dish } from "./dish.schema/dish.schema";
 import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
+import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
 @Controller("dish")
 export class DishController {
@@ -27,7 +28,7 @@ export class DishController {
 
   // @UseGuards(JwtAuthGuard)
   @Get(":id")
-  async findById(@Param("id") id: string) {
+  async findById(@Param("id", IdValidationPipe) id: string) {
     return this.dishService.findById(id);
   }
 
@@ -37,12 +38,12 @@ export class DishController {
   }
 
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: Dish) {
+  async updateById(@Param("id", IdValidationPipe) id: string, @Body() dto: CreateDishDto) {
     return this.dishService.updateById(id, dto);
   }
 
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id", IdValidationPipe) id: string) {
     return this.dishService.delete(id);
   }
 }

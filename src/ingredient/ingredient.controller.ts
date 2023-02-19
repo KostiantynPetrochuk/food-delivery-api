@@ -12,6 +12,7 @@ import {
 import { Ingredient } from "./ingredient.schema/ingredient.schema";
 import { CreateIngredientDto } from "./dto/create-ingredient.dto";
 import { IngredientService } from "./ingredient.service";
+import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
 @Controller("ingredient")
 export class IngredientController {
@@ -24,7 +25,7 @@ export class IngredientController {
   }
 
   @Get(":id")
-  async findById(@Param("id") id: string) {
+  async findById(@Param("id", IdValidationPipe) id: string) {
     return this.ingredientService.findById(id);
   }
 
@@ -34,12 +35,12 @@ export class IngredientController {
   }
 
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: Ingredient) {
+  async updateById(@Param("id", IdValidationPipe) id: string, @Body() dto: CreateIngredientDto) {
     return this.ingredientService.updateById(id, dto);
   }
 
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id", IdValidationPipe) id: string) {
     return this.ingredientService.delete(id);
   }
 }

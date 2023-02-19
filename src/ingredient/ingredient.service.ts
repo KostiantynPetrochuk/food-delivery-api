@@ -56,7 +56,7 @@ export class IngredientService {
     ]);
   }
 
-  async updateById(id: string, dto: Ingredient) {
+  async updateById(id: string, dto: CreateIngredientDto) {
     return this.ingredientModel.findOneAndUpdate(new ObjectId(id), dto, { new: true }).exec();
   }
 

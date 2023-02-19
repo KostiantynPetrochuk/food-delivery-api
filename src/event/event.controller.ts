@@ -12,6 +12,7 @@ import {
 import { Event } from "./event.schema/event.schema";
 import { CreateEventDto } from "./dto/create-event-dto";
 import { EventService } from "./event.service";
+import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
 @Controller("event")
 export class EventController {
@@ -24,7 +25,7 @@ export class EventController {
   }
 
   @Get(":id")
-  async findById(@Param("id") id: string) {
+  async findById(@Param("id", IdValidationPipe) id: string) {
     return this.eventService.findById(id);
   }
 
@@ -34,12 +35,12 @@ export class EventController {
   }
 
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: Event) {
+  async updateById(@Param("id", IdValidationPipe) id: string, @Body() dto: CreateEventDto) {
     return this.eventService.updateById(id, dto);
   }
 
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id", IdValidationPipe) id: string) {
     return this.eventService.delete(id);
   }
 }

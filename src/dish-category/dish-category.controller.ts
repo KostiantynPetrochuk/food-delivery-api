@@ -12,6 +12,7 @@ import {
 import { DishCategory } from "./dish-category.schema/dish-category.schema";
 import { DishCategoryService } from "./dish-category.service";
 import { CreateDishCategoryDto } from "./dto/create-dish-category.dto";
+import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
 @Controller("dish-category")
 export class DishCategoryController {
@@ -24,7 +25,7 @@ export class DishCategoryController {
   }
 
   @Get(":id")
-  async findById(@Param("id") id: string) {
+  async findById(@Param("id", IdValidationPipe) id: string) {
     return this.dishCategoryService.findById(id);
   }
 
@@ -34,12 +35,12 @@ export class DishCategoryController {
   }
 
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: DishCategory) {
+  async updateById(@Param("id", IdValidationPipe) id: string, @Body() dto: CreateDishCategoryDto) {
     return this.dishCategoryService.updateById(id, dto);
   }
 
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id", IdValidationPipe) id: string) {
     return this.dishCategoryService.delete(id);
   }
 }

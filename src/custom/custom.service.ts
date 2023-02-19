@@ -56,7 +56,7 @@ export class CustomService {
     ]);
   }
 
-  async updateById(id: string, dto: Custom) {
+  async updateById(id: string, dto: CreateCustomDto) {
     return this.customModel.findOneAndUpdate(new ObjectId(id), dto, { new: true }).exec();
   }
 

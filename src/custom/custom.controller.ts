@@ -12,6 +12,7 @@ import {
 import { CreateCustomDto } from "./dto/create-custom.dto";
 import { Custom } from "./custom.schema/custom.schema";
 import { CustomService } from "./custom.service";
+import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
 @Controller("custom")
 export class CustomController {
@@ -24,7 +25,7 @@ export class CustomController {
   }
 
   @Get(":id")
-  async findById(@Param("id") id: string) {
+  async findById(@Param("id", IdValidationPipe) id: string) {
     return this.customService.findById(id);
   }
 
@@ -34,12 +35,12 @@ export class CustomController {
   }
 
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: Custom) {
+  async updateById(@Param("id", IdValidationPipe) id: string, @Body() dto: CreateCustomDto) {
     return this.customService.updateById(id, dto);
   }
 
   @Delete(":id")
-  async delete(@Param("id") id: string) {
+  async delete(@Param("id", IdValidationPipe) id: string) {
     return this.customService.delete(id);
   }
 }

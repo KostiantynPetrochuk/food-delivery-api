@@ -40,7 +40,7 @@ export class DishService {
     ]);
   }
 
-  async updateById(id: string, dto: Dish) {
+  async updateById(id: string, dto: CreateDishDto) {
     return this.dishModel.findOneAndUpdate(new ObjectId(id), dto, { new: true }).exec();
   }
 
