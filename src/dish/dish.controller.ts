@@ -8,7 +8,9 @@ import {
   Param,
   UsePipes,
   ValidationPipe,
+  UseGuards,
 } from "@nestjs/common";
+import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
 import { Dish } from "./dish.schema/dish.schema";
 import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
@@ -23,6 +25,7 @@ export class DishController {
     return this.dishService.create(dto);
   }
 
+  // @UseGuards(JwtAuthGuard)
   @Get(":id")
   async findById(@Param("id") id: string) {
     return this.dishService.findById(id);

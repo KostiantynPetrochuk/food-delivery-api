@@ -1,5 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
-import { IsBoolean } from "class-validator/types/decorator/decorators";
+import { IsNumber, IsString, IsBoolean } from "class-validator";
 
 export class CreateDishDto {
   @IsString()
