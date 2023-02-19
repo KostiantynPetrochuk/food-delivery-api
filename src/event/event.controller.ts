@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { Event } from "./event.schema/event.schema";
 import { CreateEventDto } from "./dto/create-event-dto";
 import { EventService } from "./event.service";
@@ -7,6 +17,7 @@ import { EventService } from "./event.service";
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateEventDto) {
     return this.eventService.create(dto);

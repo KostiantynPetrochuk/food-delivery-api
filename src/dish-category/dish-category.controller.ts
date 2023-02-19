@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { DishCategory } from "./dish-category.schema/dish-category.schema";
 import { DishCategoryService } from "./dish-category.service";
 import { CreateDishCategoryDto } from "./dto/create-dish-category.dto";
@@ -7,6 +17,7 @@ import { CreateDishCategoryDto } from "./dto/create-dish-category.dto";
 export class DishCategoryController {
   constructor(private readonly dishCategoryService: DishCategoryService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateDishCategoryDto) {
     return this.dishCategoryService.create(dto);

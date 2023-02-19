@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { Ingredient } from "./ingredient.schema/ingredient.schema";
 import { CreateIngredientDto } from "./dto/create-ingredient.dto";
 import { IngredientService } from "./ingredient.service";
@@ -7,6 +17,7 @@ import { IngredientService } from "./ingredient.service";
 export class IngredientController {
   constructor(private readonly ingredientService: IngredientService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateIngredientDto) {
     return this.ingredientService.create(dto);

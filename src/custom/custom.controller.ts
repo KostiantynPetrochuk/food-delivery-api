@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { CreateCustomDto } from "./dto/create-custom.dto";
 import { Custom } from "./custom.schema/custom.schema";
 import { CustomService } from "./custom.service";
@@ -7,6 +17,7 @@ import { CustomService } from "./custom.service";
 export class CustomController {
   constructor(private readonly customService: CustomService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateCustomDto) {
     return this.customService.create(dto);

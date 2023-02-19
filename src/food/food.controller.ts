@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { Food } from "./food.schema/food.schema";
 import { CreateFoodDto } from "./dto/create-food.to";
 import { FoodService } from "./food.service";
@@ -7,6 +17,7 @@ import { FoodService } from "./food.service";
 export class FoodController {
   constructor(private readonly foodService: FoodService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateFoodDto) {
     return this.foodService.create(dto);

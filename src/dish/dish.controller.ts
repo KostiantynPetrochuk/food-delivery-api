@@ -1,4 +1,14 @@
-import { Controller, Post, Get, Patch, Delete, Body, Param } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { Dish } from "./dish.schema/dish.schema";
 import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
@@ -7,6 +17,7 @@ import { CreateDishDto } from "./dto/create-dish.dto";
 export class DishController {
   constructor(private readonly dishService: DishService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post("create")
   async create(@Body() dto: CreateDishDto) {
     return this.dishService.create(dto);
