@@ -10,5 +10,6 @@ export const getMongoConfig = async (
 };
 
 const getMongoString = (configService: ConfigService) => {
-  return "mongodb://" + configService.get("MONGODB_URI");
+  // return "mongodb://" + configService.get("MONGODB_URI");
+  return configService.get("MONGODB_URI");
 };
