@@ -11,7 +11,6 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
-import { Dish } from "./dish.schema/dish.schema";
 import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
 import { IdValidationPipe } from "../pipes/id-validation.pipe";
@@ -30,6 +29,11 @@ export class DishController {
   @Get(":id")
   async findById(@Param("id", IdValidationPipe) id: string) {
     return this.dishService.findById(id);
+  }
+
+  @Get("byDishCategory/:id")
+  async findAllByDishCategory(@Param("id", IdValidationPipe) id: string) {
+    return this.dishService.findAllByDishCategory(id);
   }
 
   @Get()

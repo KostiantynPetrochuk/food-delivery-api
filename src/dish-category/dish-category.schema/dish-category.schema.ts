@@ -7,6 +7,8 @@ export type DishCategoryDocument = HydratedDocument<DishCategory>;
 export class DishCategory {
   @Prop()
   name: string;
+  @Prop()
+  imagePath: string;
 }
 
 export const DishCategorySchema = SchemaFactory.createForClass(DishCategory);
