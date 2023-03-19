@@ -18,17 +18,14 @@ export class DishService {
   }
 
   async findById(id: string) {
-    return this.dishModel.aggregate([
-      { $match: { _id: new ObjectId(id) } },
-      {
-        $lookup: {
-          from: "dishcategories",
-          localField: "dishCategory",
-          foreignField: "_id",
-          as: "dishCategory",
-        },
-      },
-    ]);
+    const dish = await this.dishModel.findOne({ _id: new ObjectId(id) });
+    const ingredients = await this.ingredientModel
+      .find({ dish: dish._id })
+      .populate("food", "name");
+    return {
+      ...dish.toObject(),
+      ingredients: ingredients.map((ingredient) => ingredient.food.name),
+    };
   }
 
   async findAll() {
