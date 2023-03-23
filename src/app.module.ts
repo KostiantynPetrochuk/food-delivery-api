@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { getMongoConfig } from "./configs/mongo.config";
 import { FilesModule } from "./files/files.module";
+import { HomePageModule } from "./homePage/homePage.module";
 import { TelegramModule } from "./telegram/telegram.module";
 import { getTelegramConfig } from "./configs/telegram.config";
 
@@ -33,6 +34,7 @@ import { getTelegramConfig } from "./configs/telegram.config";
     CustomModule,
     EventModule,
     FilesModule,
+    HomePageModule,
     TelegramModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
