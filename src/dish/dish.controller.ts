@@ -31,9 +31,19 @@ export class DishController {
     return this.dishService.findById(id);
   }
 
+  @Post("bySlug/:slug")
+  async findBySlug(@Param("slug") slug: string) {
+    return this.dishService.findBySlug(slug);
+  }
+
   @Get("byDishCategory/:id")
   async findAllByDishCategory(@Param("id", IdValidationPipe) id: string) {
     return this.dishService.findAllByDishCategory(id);
+  }
+
+  @Post("byDishCategorySlug/:slug")
+  async findAllByDishCategorySlug(@Param("slug") slug: string) {
+    return this.dishService.findAllByDishCategorySlug(slug);
   }
 
   @Get()

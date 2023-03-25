@@ -8,6 +8,8 @@ export class DishCategory {
   @Prop()
   name: string;
   @Prop()
+  slug: string;
+  @Prop()
   imagePath: string;
 }
 

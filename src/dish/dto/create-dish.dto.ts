@@ -6,6 +6,8 @@ export class CreateDishDto {
   @IsString()
   name: string;
   @IsString()
+  slug: string;
+  @IsString()
   imagePath: string;
   @IsNumber()
   weight: number;

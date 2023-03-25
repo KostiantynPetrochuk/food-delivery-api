@@ -28,6 +28,17 @@ export class DishService {
     };
   }
 
+  async findBySlug(slug: string) {
+    const dish = await this.dishModel.findOne({ slug });
+    const ingredients = await this.ingredientModel
+      .find({ dish: dish._id })
+      .populate("food", "name");
+    return {
+      ...dish.toObject(),
+      ingredients: ingredients.map((ingredient) => ingredient.food.name),
+    };
+  }
+
   async findAll() {
     return this.dishModel.aggregate([
       {
@@ -55,6 +66,36 @@ export class DishService {
       .exec();
 
     const dishesWithIngredients = dishes.map((dish) => {
+      const dishIngredients = ingredients
+        .filter((ingredient) => ingredient.dish.toString() === dish._id.toString())
+        .map((ingredient) => ingredient.food.name);
+
+      return { ...dish.toObject(), ingredients: dishIngredients };
+    });
+
+    return dishesWithIngredients;
+  }
+
+  async findAllByDishCategorySlug(slug: string) {
+    const dishes = await this.dishModel
+      .find()
+      .populate({
+        path: "dishCategory",
+        match: { slug: slug },
+        select: "name",
+      })
+      .exec();
+
+    const filteredDishes = dishes.filter((dish) => dish.dishCategory !== null);
+
+    const dishIds = filteredDishes.map((dish) => dish._id);
+
+    const ingredients = await this.ingredientModel
+      .find({ dish: { $in: dishIds } })
+      .populate("food", "name")
+      .exec();
+
+    const dishesWithIngredients = filteredDishes.map((dish) => {
       const dishIngredients = ingredients
         .filter((ingredient) => ingredient.dish.toString() === dish._id.toString())
         .map((ingredient) => ingredient.food.name);

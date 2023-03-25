@@ -9,6 +9,8 @@ export class Dish {
   @Prop()
   name: string;
   @Prop()
+  slug: string;
+  @Prop()
   imagePath: string;
   @Prop()
   weight: number;
