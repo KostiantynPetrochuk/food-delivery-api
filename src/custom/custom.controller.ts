@@ -10,7 +10,6 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { CreateCustomDto } from "./dto/create-custom.dto";
-import { Custom } from "./custom.schema/custom.schema";
 import { CustomService } from "./custom.service";
 import { IdValidationPipe } from "../pipes/id-validation.pipe";
 
@@ -22,6 +21,11 @@ export class CustomController {
   @Post("create")
   async create(@Body() dto: CreateCustomDto) {
     return this.customService.create(dto);
+  }
+
+  @Post("createMany")
+  async createMany(@Body() dtos: CreateCustomDto[]) {
+    return this.customService.createMany(dtos);
   }
 
   @Get(":id")

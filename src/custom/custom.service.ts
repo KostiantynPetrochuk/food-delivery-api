@@ -13,6 +13,10 @@ export class CustomService {
     return this.customModel.create(dto);
   }
 
+  async createMany(dtos: CreateCustomDto[]): Promise<Custom[]> {
+    return this.customModel.create(dtos);
+  }
+
   async findById(id: string) {
     return this.customModel.aggregate([
       { $match: { _id: new ObjectId(id) } },
