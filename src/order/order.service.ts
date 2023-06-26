@@ -4,13 +4,28 @@ import { Model } from "mongoose";
 import { ObjectId } from "mongodb";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { Order, OrderDocument } from "./order.schema/order.schema";
+import { CreateCustomDto } from "src/custom/dto/create-custom.dto";
+import { Custom, CustomDocument } from "src/custom/custom.schema/custom.schema";
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>) {}
+  constructor(
+    @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
+    @InjectModel(Custom.name) private customModel: Model<CustomDocument>,
+  ) {}
 
-  async create(dto: CreateOrderDto): Promise<Order> {
-    return this.orderModel.create(dto);
+  async create(dto: CreateOrderDto, dtos: Omit<CreateCustomDto, "order">[]): Promise<Order> {
+    const newOrder = await this.orderModel.create(dto);
+
+    const updatedDtos = dtos.map((custom) => ({
+      dish: custom.dish,
+      order: newOrder._id,
+      count: custom.count,
+    }));
+
+    this.customModel.create(updatedDtos);
+
+    return newOrder;
   }
 
   async findById(id: string) {

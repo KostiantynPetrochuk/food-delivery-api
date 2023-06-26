@@ -13,6 +13,7 @@ import { CreateOrderDto } from "./dto/create-order.dto";
 import { OrderService } from "./order.service";
 import { IdValidationPipe } from "../pipes/id-validation.pipe";
 import { TelegramService } from "src/telegram/telegram.service";
+import { CreateCustomDto } from "src/custom/dto/create-custom.dto";
 
 @Controller("order")
 export class OrderController {
@@ -23,8 +24,8 @@ export class OrderController {
 
   @UsePipes(new ValidationPipe())
   @Post("create")
-  async create(@Body() dto: CreateOrderDto) {
-    return this.orderService.create(dto);
+  async create(@Body() data: { dto: CreateOrderDto; dtos: Omit<CreateCustomDto, "order">[] }) {
+    return this.orderService.create(data.dto, data.dtos);
   }
 
   @UsePipes(new ValidationPipe())
