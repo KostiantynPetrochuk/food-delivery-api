@@ -9,6 +9,7 @@ async function bootstrap() {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200,
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Headers"],
   };
   app.enableCors(corsOptions);
   app.setGlobalPrefix("api");
