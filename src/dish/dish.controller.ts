@@ -10,7 +10,8 @@ import {
   ValidationPipe,
   UseGuards,
 } from "@nestjs/common";
-import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
+// import { JwtAuthGuard } from "src/auth/guards/jwt.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt.guard";
 import { DishService } from "./dish.service";
 import { CreateDishDto } from "./dto/create-dish.dto";
 import { IdValidationPipe } from "../pipes/id-validation.pipe";
