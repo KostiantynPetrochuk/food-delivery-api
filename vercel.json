@@ -24,7 +24,7 @@
     },
     {
       "src": "/static/(.*)",
-      "dest": "uploads/$1"
+      "dest": "src/uploads/$1"
     }
   ]
 }
