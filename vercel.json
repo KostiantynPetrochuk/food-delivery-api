@@ -21,6 +21,10 @@
     {
       "src": "/(.*)",
       "dest": "src/main.ts"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "uploads/$1"
     }
   ]
 }
