@@ -26,11 +26,5 @@
       "src": "/(.*)",
       "dest": "src/main.ts"
     }
-  ],
-  "env": {
-    "MONGODB_URI": "@MONGODB_URI",
-    "JWT_SECRET": "@JWT_SECRET",
-    "TELEGRAM_TOKEN": "@TELEGRAM_TOKEN",
-    "CHAT_ID": "@CHAT_ID"
-  }
+  ]
 }
